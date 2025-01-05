@@ -35,6 +35,13 @@ void setup() {
   my_grid.inspect();
 
 
+  Serial.println("");
+  Serial.println("");
+
+  opponents_grid.acknowledge_cell({2,2}, CELL_FULL);
+  opponents_grid.acknowledge_cell({3,2}, CELL_FULL);
+
+  opponents_grid.inspect();
 }
 
 void loop() {

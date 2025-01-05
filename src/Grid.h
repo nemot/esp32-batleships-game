@@ -10,5 +10,8 @@ class Grid {
     void inspect();
     void empty();
     bool place_figure(Coordinate point, Ship ship, bool simulate = false);
+    void acknowledge_cell(Coordinate point, char value);
+    bool neighbours_has_ship(Coordinate point);
+    std::vector<Coordinate> connected_cells(Coordinate point);
     std::vector<Coordinate> empty_cells();
 };
