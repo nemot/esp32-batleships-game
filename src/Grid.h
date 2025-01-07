@@ -1,4 +1,5 @@
 #include <vector>
+#include "WiFi.h"
 #include "types.h"
 
 class Grid {
@@ -7,7 +8,7 @@ class Grid {
     std::vector<std::vector<char>> grid;
     static constexpr short HEIGHT = 10;
     static constexpr short WIDTH = 10;
-    void inspect();
+    void inspect(WiFiClient* wifi_client = nullptr);
     void empty();
     bool place_figure(Coordinate point, Ship ship, bool simulate = false);
     void acknowledge_cell(Coordinate point, char value);

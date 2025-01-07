@@ -91,20 +91,28 @@ void Grid::empty() {
   }
 }
 
-void Grid::inspect() {
+void Grid::inspect(WiFiClient* wifi_client) {
   const char row_names[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-  Serial.println("    1   2   3   4   5   6   7   8   9   10");
-  Serial.println("  +---+---+---+---+---+---+---+---+---+---+");
-  for(size_t rowIndex = 0; rowIndex < grid.size(); rowIndex++) {
-    Serial.print(row_names[rowIndex]);
-    Serial.print(" |");
-    for(char& c : grid[rowIndex]) {
-      Serial.print(" ");
-      Serial.print(c);
-      Serial.print(" |");
+
+  auto output = [&](const String& message) {
+    if (wifi_client && wifi_client->connected()) {
+      wifi_client->println(message);
+    } else {
+      Serial.println(message);
     }
-    Serial.println("");
-    Serial.println("  +---+---+---+---+---+---+---+---+---+---+");
+  };
+
+  output("    1   2   3   4   5   6   7   8   9   10");
+  output("  +---+---+---+---+---+---+---+---+---+---+");
+  for (size_t rowIndex = 0; rowIndex < grid.size(); rowIndex++) {
+    String row_output = String(row_names[rowIndex]) + " |";
+    for (char& c : grid[rowIndex]) {
+      row_output += " ";
+      row_output += c;
+      row_output += " |";
+    }
+    output(row_output);
+    output("  +---+---+---+---+---+---+---+---+---+---+");
   }
   
 }
